@@ -5,8 +5,7 @@
 		"annotations": [],
 		"type": "AzureBlobStorage",
 		"typeProperties": {
-			"connectionString": "DefaultEndpointsProtocol=https;AccountName=konikaacc;EndpointSuffix=core.windows.net;",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIktPTklLQU1BREZfMmMyMzAwYTQtYWI3ZS00YjI4LThiMDctYTA0M2NiMGI4Zjk5Ig0KfQ=="
+			"connectionString": "Server=tcp:serverkonika.database.windows.net,1433;Initial Catalog=SampleDB;Persist Security Info=False;User ID=sqladmin;Password={training123$};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
 		}
 	}
 }

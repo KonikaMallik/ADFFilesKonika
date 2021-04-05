@@ -1,0 +1,17 @@
+{
+	"name": "ADVSourceDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADVSourceLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "HumanResources",
+			"table": "EmployeeDepartmentHistory"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

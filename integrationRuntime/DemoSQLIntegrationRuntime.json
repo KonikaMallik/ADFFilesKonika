@@ -1,0 +1,6 @@
+{
+	"name": "DemoSQLIntegrationRuntime",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

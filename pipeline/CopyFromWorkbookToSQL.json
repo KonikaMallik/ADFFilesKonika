@@ -1,9 +1,9 @@
 {
-	"name": "CopySalesFromSQLToContainer",
+	"name": "CopyFromWorkbookToSQL",
 	"properties": {
 		"activities": [
 			{
-				"name": "Get Sales Data",
+				"name": "Get All Worksheets",
 				"type": "Lookup",
 				"dependsOn": [],
 				"policy": {
@@ -16,24 +16,26 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT * FROM SampleDB.INFORMATION_SCHEMA.TABLES WHERE table_schema = 'SalesLT'",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						}
 					},
 					"dataset": {
-						"referenceName": "AzureSqlSalesDataset",
+						"referenceName": "ExcelSalesData",
 						"type": "DatasetReference"
 					},
 					"firstRowOnly": false
 				}
 			},
 			{
-				"name": "Get All Tables",
+				"name": "Get Excel Files",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "Get Sales Data",
+						"activity": "Get All Worksheets",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -42,12 +44,12 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('Get Sales Data').output.value",
+						"value": "@activity('Get All Worksheets').output.value",
 						"type": "Expression"
 					},
 					"activities": [
 						{
-							"name": "Copy SQL To Container",
+							"name": "Copy From Workbook To SQL",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -60,20 +62,16 @@
 							"userProperties": [],
 							"typeProperties": {
 								"source": {
-									"type": "AzureSqlSource",
-									"queryTimeout": "02:00:00",
-									"partitionOption": "None"
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "FileServerReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
 								},
 								"sink": {
-									"type": "DelimitedTextSink",
-									"storeSettings": {
-										"type": "AzureBlobStorageWriteSettings"
-									},
-									"formatSettings": {
-										"type": "DelimitedTextWriteSettings",
-										"quoteAllText": true,
-										"fileExtension": ".txt"
-									}
+									"type": "SqlDWSink",
+									"tableOption": "autoCreate"
 								},
 								"enableStaging": false,
 								"translator": {
@@ -87,27 +85,17 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "GenerateSalesDataDataset",
-									"type": "DatasetReference",
-									"parameters": {
-										"TableName": {
-											"value": "@item().table_name",
-											"type": "Expression"
-										},
-										"SchemaName": {
-											"value": "@item().table_schema",
-											"type": "Expression"
-										}
-									}
+									"referenceName": "ExcelSalesData",
+									"type": "DatasetReference"
 								}
 							],
 							"outputs": [
 								{
-									"referenceName": "BlobSalesOutputDataset",
+									"referenceName": "AzureSynapseDesDataset",
 									"type": "DatasetReference",
 									"parameters": {
-										"FileName": {
-											"value": "@concat(item().table_schema,'_',item().table_name,'.csv')",
+										"TableName": {
+											"value": "@{item().Prop_0}",
 											"type": "Expression"
 										}
 									}
@@ -119,7 +107,7 @@
 			}
 		],
 		"annotations": [],
-		"lastPublishTime": "2021-04-05T06:58:56Z"
+		"lastPublishTime": "2021-04-05T14:23:46Z"
 	},
 	"type": "Microsoft.DataFactory/factories/pipelines"
 }
