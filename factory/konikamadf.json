@@ -1,0 +1,9 @@
+{
+	"name": "konikamadf",
+	"location": "eastus2",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "c7501a06-a7c0-4671-b996-85d2c5077110",
+		"tenantId": "f3c1fdcd-ddcc-4ca4-b512-673ef9cdb9b4"
+	}
+}

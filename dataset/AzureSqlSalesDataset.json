@@ -1,0 +1,13 @@
+{
+	"name": "AzureSqlSalesDataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlSalesLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
