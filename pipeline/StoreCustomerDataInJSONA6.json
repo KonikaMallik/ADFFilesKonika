@@ -1,0 +1,86 @@
+{
+	"name": "StoreCustomerDataInJSONA6",
+	"properties": {
+		"activities": [
+			{
+				"name": "CopySalesDataInJSON",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "select c.FirstName + ' ' + c.LastName as CustomerName, p.Name as ProductName,\nsd.UnitPrice as ProductCost from  [SalesLT].[Customer] c join [SalesLT].[SalesOrderHeader] sh \non sh.CustomerID = c.CustomerID join [SalesLT].[SalesOrderDetail] sd \non sh.SalesOrderID = sd.SalesOrderID join [SalesLT].[Product] p \non sd.ProductID = p.ProductID",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobStorageWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CustomerName",
+									"type": "String"
+								},
+								"sink": {
+									"path": "CustomerName"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductName",
+									"type": "String"
+								},
+								"sink": {
+									"path": "ProductName"
+								}
+							},
+							{
+								"source": {
+									"name": "ProductCost",
+									"type": "Decimal"
+								},
+								"sink": {
+									"path": "ProductCost"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSqlSampleDBSource",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "JSONFileOutputDSA3",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
