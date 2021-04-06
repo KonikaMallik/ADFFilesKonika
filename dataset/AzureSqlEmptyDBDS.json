@@ -49,6 +49,16 @@
 				"name": "HashKey",
 				"type": "nvarchar"
 			}
-		]
+		],
+		"typeProperties": {
+			"schema": {
+				"value": "HumanResources",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "Employee",
+				"type": "Expression"
+			}
+		}
 	}
 }
