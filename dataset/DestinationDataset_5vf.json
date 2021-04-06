@@ -1,0 +1,22 @@
+{
+	"name": "DestinationDataset_5vf",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeDesDSA2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureDataLakeStoreLocation",
+				"folderPath": "adfdata"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
