@@ -1,0 +1,32 @@
+{
+	"name": "TotalSales_SalesPersonDFA5",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlSampleDBSource",
+						"type": "DatasetReference"
+					},
+					"name": "SalesTableSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureDimProductSourceDS",
+						"type": "DatasetReference"
+					},
+					"name": "sinkoutput"
+				}
+			],
+			"transformations": [
+				{
+					"name": "AggregateSales"
+				}
+			],
+			"script": "source(output(\n\t\tSalesPerson as string,\n\t\tLineTotal as decimal(38,6)\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tquery: 'select c.SalesPerson, sd.LineTotal from [SalesLT].[Customer] c \\njoin [SalesLT].[SalesOrderHeader] sh on c.CustomerID = sh.CustomerID\\njoin [SalesLT].[SalesOrderDetail] sd on sh.SalesOrderID = sd.SalesOrderID',\n\tformat: 'query') ~> SalesTableSource\nSalesTableSource aggregate(groupBy(SalesPerson),\n\tTotalSales = sum(LineTotal)) ~> AggregateSales\nAggregateSales sink(input(\n\t\tProductID as integer,\n\t\tName as string,\n\t\tColor as string,\n\t\tStandardCost as decimal(19,4),\n\t\tSellStartDate as timestamp,\n\t\tInsertedDate as timestamp,\n\t\tUpdatedDate as timestamp,\n\t\tHashKey as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sinkoutput"
+		}
+	}
+}
