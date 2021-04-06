@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy_5vf",
+				"name": "CopyOnPremiseToADLS",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
