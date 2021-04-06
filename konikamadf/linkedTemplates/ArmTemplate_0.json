@@ -67,6 +67,22 @@
 			"type": "string",
 			"defaultValue": "malli"
 		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://konikaadlsgen1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "f3c1fdcd-ddcc-4ca4-b512-673ef9cdb9b4"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "a9d5dd50-031b-43f6-bbe2-fc08769ccce9"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "Konika-LTIRG"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://konikaadlsgen2.dfs.core.windows.net"
@@ -102,6 +118,22 @@
 						"type": "SecureString",
 						"value": "[parameters('ADVSourceLS_password')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeDesDSA2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDataLakeStore",
+				"typeProperties": {
+					"dataLakeStoreUri": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri')]",
+					"tenant": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_tenant')]",
+					"subscriptionId": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId')]",
+					"resourceGroupName": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName')]"
 				}
 			},
 			"dependsOn": []
@@ -582,113 +614,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDimCustomerLS')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlProductDS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlSampleDBLS",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "ProductID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ProductNumber",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Color",
-						"type": "nvarchar"
-					},
-					{
-						"name": "StandardCost",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					},
-					{
-						"name": "ListPrice",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					},
-					{
-						"name": "Size",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Weight",
-						"type": "decimal",
-						"precision": 8,
-						"scale": 2
-					},
-					{
-						"name": "ProductCategoryID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "ProductModelID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "SellStartDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "SellEndDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DiscontinuedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "ThumbNailPhoto",
-						"type": "varbinary"
-					},
-					{
-						"name": "ThumbnailPhotoFileName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "rowguid",
-						"type": "uniqueidentifier"
-					},
-					{
-						"name": "ModifiedDate",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "SalesLT",
-					"table": "Product"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlSampleDBLS')]"
 			]
 		}
 	]

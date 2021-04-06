@@ -51,6 +51,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremSQLServerLS'"
 		},
+		"OnPremiseSQLLSA2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OnPremiseSQLLSA2'"
+		},
+		"OnPremiseSQLLSA2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnPremiseSQLLSA2'"
+		},
 		"OnPremiseSQLServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremiseSQLServer'"
@@ -71,6 +79,22 @@
 			"type": "string",
 			"defaultValue": "malli"
 		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://konikaadlsgen1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "f3c1fdcd-ddcc-4ca4-b512-673ef9cdb9b4"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "a9d5dd50-031b-43f6-bbe2-fc08769ccce9"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "Konika-LTIRG"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://konikaadlsgen2.dfs.core.windows.net"
@@ -78,6 +102,10 @@
 		"OnPremSQLServerLS_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "@{linkedService().UserName}"
+		},
+		"OnPremiseSQLLSA2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "malli"
 		},
 		"OnPremiseSQLServer_properties_typeProperties_userName": {
 			"type": "string",
@@ -163,6 +191,18 @@
 					"ADVSourceLS_properties_typeProperties_userName": {
 						"value": "[parameters('ADVSourceLS_properties_typeProperties_userName')]"
 					},
+					"AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri": {
+						"value": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri')]"
+					},
+					"AzureDataLakeDesDSA2_properties_typeProperties_tenant": {
+						"value": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_tenant')]"
+					},
+					"AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId": {
+						"value": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId')]"
+					},
+					"AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName": {
+						"value": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName')]"
+					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
@@ -196,13 +236,42 @@
 					"OnPremSQLServerLS_connectionString": {
 						"value": "[parameters('OnPremSQLServerLS_connectionString')]"
 					},
+					"OnPremiseSQLLSA2_connectionString": {
+						"value": "[parameters('OnPremiseSQLLSA2_connectionString')]"
+					},
+					"OnPremiseSQLLSA2_password": {
+						"value": "[parameters('OnPremiseSQLLSA2_password')]"
+					},
 					"OnPremSQLServerLS_properties_typeProperties_userName": {
 						"value": "[parameters('OnPremSQLServerLS_properties_typeProperties_userName')]"
+					},
+					"OnPremiseSQLLSA2_properties_typeProperties_userName": {
+						"value": "[parameters('OnPremiseSQLLSA2_properties_typeProperties_userName')]"
 					}
 				}
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'konikamadf_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "konikamadf_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'konikamadf_ArmTemplate_1')]"
 			]
 		}
 	]

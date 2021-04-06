@@ -38,6 +38,12 @@
 		"OnPremSQLServerLS_connectionString": {
 			"value": ""
 		},
+		"OnPremiseSQLLSA2_connectionString": {
+			"value": ""
+		},
+		"OnPremiseSQLLSA2_password": {
+			"value": ""
+		},
 		"OnPremiseSQLServer_connectionString": {
 			"value": ""
 		},
@@ -53,11 +59,26 @@
 		"ADVSourceLS_properties_typeProperties_userName": {
 			"value": "malli"
 		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri": {
+			"value": "https://konikaadlsgen1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_tenant": {
+			"value": "f3c1fdcd-ddcc-4ca4-b512-673ef9cdb9b4"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId": {
+			"value": "a9d5dd50-031b-43f6-bbe2-fc08769ccce9"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName": {
+			"value": "Konika-LTIRG"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://konikaadlsgen2.dfs.core.windows.net"
 		},
 		"OnPremSQLServerLS_properties_typeProperties_userName": {
 			"value": "@{linkedService().UserName}"
+		},
+		"OnPremiseSQLLSA2_properties_typeProperties_userName": {
+			"value": "malli"
 		},
 		"OnPremiseSQLServer_properties_typeProperties_userName": {
 			"value": "malli"

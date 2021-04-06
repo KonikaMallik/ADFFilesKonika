@@ -51,6 +51,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremSQLServerLS'"
 		},
+		"OnPremiseSQLLSA2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OnPremiseSQLLSA2'"
+		},
+		"OnPremiseSQLLSA2_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnPremiseSQLLSA2'"
+		},
 		"OnPremiseSQLServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremiseSQLServer'"
@@ -71,6 +79,22 @@
 			"type": "string",
 			"defaultValue": "malli"
 		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri": {
+			"type": "string",
+			"defaultValue": "https://konikaadlsgen1.azuredatalakestore.net/webhdfs/v1"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_tenant": {
+			"type": "string",
+			"defaultValue": "f3c1fdcd-ddcc-4ca4-b512-673ef9cdb9b4"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "a9d5dd50-031b-43f6-bbe2-fc08769ccce9"
+		},
+		"AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "Konika-LTIRG"
+		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://konikaadlsgen2.dfs.core.windows.net"
@@ -78,6 +102,10 @@
 		"OnPremSQLServerLS_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "@{linkedService().UserName}"
+		},
+		"OnPremiseSQLLSA2_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "malli"
 		},
 		"OnPremiseSQLServer_properties_typeProperties_userName": {
 			"type": "string",
@@ -260,6 +288,75 @@
 				"[concat(variables('factoryId'), '/datasets/GetEmployeeSource')]",
 				"[concat(variables('factoryId'), '/datasets/ADVSourceDataset')]",
 				"[concat(variables('factoryId'), '/datasets/SampleDestinationDatabase')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyOnPremiseToADLSGen1A2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopyOnPremiseToADLS",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "HumanResources.Employee"
+							},
+							{
+								"name": "Destination",
+								"value": "adfdata/"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureDataLakeStoreWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_5vf",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_5vf",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_5vf')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_5vf')]"
 			]
 		},
 		{
@@ -1101,6 +1198,33 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_5vf')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeDesDSA2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureDataLakeStoreLocation",
+						"folderPath": "adfdata"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeDesDSA2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/GenerateSalesDataDataset')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1319,6 +1443,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_5vf')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "OnPremiseSQLLSA2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "HumanResources",
+					"table": "Employee"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/OnPremiseSQLLSA2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ADVSourceLS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -1332,6 +1477,22 @@
 						"type": "SecureString",
 						"value": "[parameters('ADVSourceLS_password')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeDesDSA2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureDataLakeStore",
+				"typeProperties": {
+					"dataLakeStoreUri": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_dataLakeStoreUri')]",
+					"tenant": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_tenant')]",
+					"subscriptionId": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_subscriptionId')]",
+					"resourceGroupName": "[parameters('AzureDataLakeDesDSA2_properties_typeProperties_resourceGroupName')]"
 				}
 			},
 			"dependsOn": []
@@ -1469,6 +1630,30 @@
 					"connectionString": "[parameters('OnPremSQLServerLS_connectionString')]",
 					"userName": "[parameters('OnPremSQLServerLS_properties_typeProperties_userName')]",
 					"password": "@{linkedService().Password}"
+				},
+				"connectVia": {
+					"referenceName": "AssignmentSelfHostedIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AssignmentSelfHostedIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/OnPremiseSQLLSA2')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"connectionString": "[parameters('OnPremiseSQLLSA2_connectionString')]",
+					"userName": "[parameters('OnPremiseSQLLSA2_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('OnPremiseSQLLSA2_password')]"
+					}
 				},
 				"connectVia": {
 					"referenceName": "AssignmentSelfHostedIR",
