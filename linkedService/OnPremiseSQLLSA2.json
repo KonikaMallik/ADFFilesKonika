@@ -1,0 +1,17 @@
+{
+	"name": "OnPremiseSQLLSA2",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=DESKTOP-4TU0REN\\SQLEXPRESS;initial catalog=AdventureWorks2012",
+			"userName": "malli",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI3ZTU1ZDA3Ny1lMTgyLTQ4Y2MtYWZmMy0zYmYyZTQ0OGNhYjciLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "AssignmentSelfHostedIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
