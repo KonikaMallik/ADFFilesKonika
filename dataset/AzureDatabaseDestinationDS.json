@@ -1,13 +1,17 @@
 {
-	"name": "AzureSynapseDesDataset",
+	"name": "AzureDatabaseDestinationDS",
 	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabaseLS",
+			"type": "LinkedServiceReference"
+		},
 		"parameters": {
 			"TableName": {
 				"type": "string"
 			}
 		},
 		"annotations": [],
-		"type": "AzureSqlDWTable",
+		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
 			"schema": "dbo",
@@ -16,6 +20,5 @@
 				"type": "Expression"
 			}
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }

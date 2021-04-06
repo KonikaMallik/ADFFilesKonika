@@ -70,7 +70,7 @@
 									}
 								},
 								"sink": {
-									"type": "SqlDWSink",
+									"type": "AzureSqlSink",
 									"tableOption": "autoCreate"
 								},
 								"enableStaging": false,
@@ -91,7 +91,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSynapseDesDataset",
+									"referenceName": "AzureDatabaseDestinationDS",
 									"type": "DatasetReference",
 									"parameters": {
 										"TableName": {
