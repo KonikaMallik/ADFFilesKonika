@@ -358,7 +358,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"container": "assignment3output"
+						"container": "jsonoutput"
 					}
 				},
 				"schema": {}
@@ -695,6 +695,100 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlSalesDataset')]",
 				"[concat(variables('factoryId'), '/datasets/GenerateSalesDataDataset')]",
 				"[concat(variables('factoryId'), '/datasets/BlobSalesOutputDataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/StoreCustomerDataInJSONA6')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "CopySalesDataInJSON",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "select c.FirstName + ' ' + c.LastName as CustomerName, p.Name as ProductName,\nsd.UnitPrice as ProductCost from  [SalesLT].[Customer] c join [SalesLT].[SalesOrderHeader] sh \non sh.CustomerID = c.CustomerID join [SalesLT].[SalesOrderDetail] sd \non sh.SalesOrderID = sd.SalesOrderID join [SalesLT].[Product] p \non sd.ProductID = p.ProductID",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobStorageWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CustomerName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "CustomerName"
+										}
+									},
+									{
+										"source": {
+											"name": "ProductName",
+											"type": "String"
+										},
+										"sink": {
+											"path": "ProductName"
+										}
+									},
+									{
+										"source": {
+											"name": "ProductCost",
+											"type": "Decimal"
+										},
+										"sink": {
+											"path": "ProductCost"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSqlSampleDBSource",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "JSONFileOutputDSA3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlSampleDBSource')]",
+				"[concat(variables('factoryId'), '/datasets/JSONFileOutputDSA3')]"
 			]
 		},
 		{
@@ -1040,53 +1134,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSqlSampleDBSource')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Assignment3Pipeline')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "CopyFromSQLToDiffJSONA3",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "CopyFromSQLToDiffJSONA3",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"SQLTablesSource": {},
-									"sink100": {},
-									"sink200": {},
-									"sink300": {},
-									"sink1000": {},
-									"sinkothers": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/CopyFromSQLToDiffJSONA3')]"
 			]
 		}
 	]
