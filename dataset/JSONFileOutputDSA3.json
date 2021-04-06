@@ -1,0 +1,18 @@
+{
+	"name": "JSONFileOutputDSA3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureJSONBlobOutputA3LS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "assignment3output"
+			}
+		},
+		"schema": {}
+	}
+}

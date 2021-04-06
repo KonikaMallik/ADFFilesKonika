@@ -1,0 +1,60 @@
+{
+	"name": "CopyFromSQLToDiffJSONA3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSalesSourceDSA3",
+						"type": "DatasetReference"
+					},
+					"name": "SQLTablesSource"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "JSONFileOutputDSA3",
+						"type": "DatasetReference"
+					},
+					"name": "sink100"
+				},
+				{
+					"dataset": {
+						"referenceName": "JSONFileOutputDSA3",
+						"type": "DatasetReference"
+					},
+					"name": "sink200"
+				},
+				{
+					"dataset": {
+						"referenceName": "JSONFileOutputDSA3",
+						"type": "DatasetReference"
+					},
+					"name": "sink300"
+				},
+				{
+					"dataset": {
+						"referenceName": "JSONFileOutputDSA3",
+						"type": "DatasetReference"
+					},
+					"name": "sink1000"
+				},
+				{
+					"dataset": {
+						"referenceName": "JSONFileOutputDSA3",
+						"type": "DatasetReference"
+					},
+					"name": "sinkothers"
+				}
+			],
+			"transformations": [
+				{
+					"name": "ConditionalSplit1"
+				}
+			],
+			"script": "source(output(\n\t\tSalesOrderID as integer,\n\t\tSalesOrderDetailID as integer,\n\t\tOrderQty as integer,\n\t\tProductID as integer,\n\t\tUnitPrice as decimal(19,4),\n\t\tUnitPriceDiscount as decimal(19,4),\n\t\tLineTotal as decimal(38,6),\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SQLTablesSource\nSQLTablesSource split(UnitPrice >= 1 && UnitPrice <= 100,\n\tUnitPrice >= 101 && UnitPrice <=200,\n\tUnitPrice >= 201 && UnitPrice <= 300,\n\tUnitPrice >= 301 && UnitPrice <= 1000,\n\tdisjoint: false) ~> ConditionalSplit1@(UnitPrice100, UnitPrice200, UnitPrice300, UnitPrice1000, OtherSales)\nConditionalSplit1@UnitPrice100 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink100\nConditionalSplit1@UnitPrice200 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink200\nConditionalSplit1@UnitPrice300 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink300\nConditionalSplit1@UnitPrice1000 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1000\nConditionalSplit1@OtherSales sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkothers"
+		}
+	}
+}
