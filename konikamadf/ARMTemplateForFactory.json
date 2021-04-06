@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"AzureJSONBlobOutputA3LS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureJSONBlobOutputA3LS'"
+		},
 		"AzureSqlDatabaseLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseLS'"
@@ -537,6 +541,76 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSalesSourceDSA3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlSampleDBLS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "SalesOrderID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "SalesOrderDetailID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "OrderQty",
+						"type": "smallint",
+						"precision": 5
+					},
+					{
+						"name": "ProductID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UnitPrice",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "UnitPriceDiscount",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "LineTotal",
+						"type": "decimal",
+						"precision": 38,
+						"scale": 6
+					},
+					{
+						"name": "rowguid",
+						"type": "uniqueidentifier"
+					},
+					{
+						"name": "ModifiedDate",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "SalesLT",
+					"table": "SalesOrderDetail"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlSampleDBLS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlDimCustomerSourceDS')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -861,7 +935,7 @@
 				],
 				"typeProperties": {
 					"schema": "SalesLT",
-					"table": "Customer"
+					"table": "SalesOrderDetail"
 				}
 			},
 			"dependsOn": [
@@ -961,6 +1035,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/JSONFileOutputDSA3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureJSONBlobOutputA3LS",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "assignment3output"
+					}
+				},
+				"schema": {}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureJSONBlobOutputA3LS')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SampleDestinationDatabase')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1003,15 +1100,9 @@
 						"type": "SecureString",
 						"value": "[parameters('ADVSourceLS_password')]"
 					}
-				},
-				"connectVia": {
-					"referenceName": "DemoSQLIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/DemoSQLIntegrationRuntime')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage1')]",
@@ -1026,6 +1117,19 @@
 						"type": "SecureString",
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureJSONBlobOutputA3LS')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureJSONBlobOutputA3LS_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -1122,15 +1226,9 @@
 						"type": "SecureString",
 						"value": "[parameters('OnPremiseSQLServer_password')]"
 					}
-				},
-				"connectVia": {
-					"referenceName": "DemoSQLIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/DemoSQLIntegrationRuntime')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SalesDataLS')]",
@@ -1146,15 +1244,9 @@
 						"type": "SecureString",
 						"value": "[parameters('SalesDataLS_password')]"
 					}
-				},
-				"connectVia": {
-					"referenceName": "DemoSQLIntegrationRuntime",
-					"type": "IntegrationRuntimeReference"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/DemoSQLIntegrationRuntime')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SampleDesLS')]",
@@ -1170,7 +1262,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DemoSQLIntegrationRuntime')]",
+			"name": "[concat(parameters('factoryName'), '/AssignmentSelfHostedIR')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1178,6 +1270,72 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopyFromSQLToDiffJSONA3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSalesSourceDSA3",
+								"type": "DatasetReference"
+							},
+							"name": "SQLTablesSource"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "JSONFileOutputDSA3",
+								"type": "DatasetReference"
+							},
+							"name": "sink100"
+						},
+						{
+							"dataset": {
+								"referenceName": "JSONFileOutputDSA3",
+								"type": "DatasetReference"
+							},
+							"name": "sink200"
+						},
+						{
+							"dataset": {
+								"referenceName": "JSONFileOutputDSA3",
+								"type": "DatasetReference"
+							},
+							"name": "sink300"
+						},
+						{
+							"dataset": {
+								"referenceName": "JSONFileOutputDSA3",
+								"type": "DatasetReference"
+							},
+							"name": "sink1000"
+						},
+						{
+							"dataset": {
+								"referenceName": "JSONFileOutputDSA3",
+								"type": "DatasetReference"
+							},
+							"name": "sinkothers"
+						}
+					],
+					"transformations": [
+						{
+							"name": "ConditionalSplit1"
+						}
+					],
+					"script": "source(output(\n\t\tSalesOrderID as integer,\n\t\tSalesOrderDetailID as integer,\n\t\tOrderQty as integer,\n\t\tProductID as integer,\n\t\tUnitPrice as decimal(19,4),\n\t\tUnitPriceDiscount as decimal(19,4),\n\t\tLineTotal as decimal(38,6),\n\t\trowguid as string,\n\t\tModifiedDate as timestamp\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> SQLTablesSource\nSQLTablesSource split(UnitPrice >= 1 && UnitPrice <= 100,\n\tUnitPrice >= 101 && UnitPrice <=200,\n\tUnitPrice >= 201 && UnitPrice <= 300,\n\tUnitPrice >= 301 && UnitPrice <= 1000,\n\tdisjoint: false) ~> ConditionalSplit1@(UnitPrice100, UnitPrice200, UnitPrice300, UnitPrice1000, OtherSales)\nConditionalSplit1@UnitPrice100 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink100\nConditionalSplit1@UnitPrice200 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink200\nConditionalSplit1@UnitPrice300 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink300\nConditionalSplit1@UnitPrice1000 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1000\nConditionalSplit1@OtherSales sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sinkothers"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSalesSourceDSA3')]",
+				"[concat(variables('factoryId'), '/datasets/JSONFileOutputDSA3')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ProductSCDDataflow')]",

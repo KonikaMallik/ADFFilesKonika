@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
 		},
+		"AzureJSONBlobOutputA3LS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureJSONBlobOutputA3LS'"
+		},
 		"AzureSqlDatabaseLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseLS'"
@@ -106,8 +110,17 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"ADVSourceLS_connectionString": {
+						"value": "[parameters('ADVSourceLS_connectionString')]"
+					},
+					"ADVSourceLS_password": {
+						"value": "[parameters('ADVSourceLS_password')]"
+					},
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureJSONBlobOutputA3LS_connectionString": {
+						"value": "[parameters('AzureJSONBlobOutputA3LS_connectionString')]"
 					},
 					"AzureSqlDatabaseLS_connectionString": {
 						"value": "[parameters('AzureSqlDatabaseLS_connectionString')]"
@@ -127,20 +140,32 @@
 					"BlobSalesOutputLS_connectionString": {
 						"value": "[parameters('BlobSalesOutputLS_connectionString')]"
 					},
+					"OnPremiseSQLServer_connectionString": {
+						"value": "[parameters('OnPremiseSQLServer_connectionString')]"
+					},
+					"OnPremiseSQLServer_password": {
+						"value": "[parameters('OnPremiseSQLServer_password')]"
+					},
+					"SalesDataLS_password": {
+						"value": "[parameters('SalesDataLS_password')]"
+					},
 					"SampleDesLS_connectionString": {
 						"value": "[parameters('SampleDesLS_connectionString')]"
 					},
-					"ADVSourceLS_connectionString": {
-						"value": "[parameters('ADVSourceLS_connectionString')]"
-					},
-					"ADVSourceLS_password": {
-						"value": "[parameters('ADVSourceLS_password')]"
+					"ADVSourceLS_properties_typeProperties_userName": {
+						"value": "[parameters('ADVSourceLS_properties_typeProperties_userName')]"
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
 					},
-					"ADVSourceLS_properties_typeProperties_userName": {
-						"value": "[parameters('ADVSourceLS_properties_typeProperties_userName')]"
+					"OnPremiseSQLServer_properties_typeProperties_userName": {
+						"value": "[parameters('OnPremiseSQLServer_properties_typeProperties_userName')]"
+					},
+					"SalesDataLS_properties_typeProperties_host": {
+						"value": "[parameters('SalesDataLS_properties_typeProperties_host')]"
+					},
+					"SalesDataLS_properties_typeProperties_userId": {
+						"value": "[parameters('SalesDataLS_properties_typeProperties_userId')]"
 					}
 				}
 			},
@@ -159,24 +184,6 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
-					},
-					"OnPremiseSQLServer_connectionString": {
-						"value": "[parameters('OnPremiseSQLServer_connectionString')]"
-					},
-					"OnPremiseSQLServer_password": {
-						"value": "[parameters('OnPremiseSQLServer_password')]"
-					},
-					"SalesDataLS_password": {
-						"value": "[parameters('SalesDataLS_password')]"
-					},
-					"OnPremiseSQLServer_properties_typeProperties_userName": {
-						"value": "[parameters('OnPremiseSQLServer_properties_typeProperties_userName')]"
-					},
-					"SalesDataLS_properties_typeProperties_host": {
-						"value": "[parameters('SalesDataLS_properties_typeProperties_host')]"
-					},
-					"SalesDataLS_properties_typeProperties_userId": {
-						"value": "[parameters('SalesDataLS_properties_typeProperties_userId')]"
 					}
 				}
 			},
