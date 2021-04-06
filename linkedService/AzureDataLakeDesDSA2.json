@@ -1,0 +1,13 @@
+{
+	"name": "AzureDataLakeDesDSA2",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDataLakeStore",
+		"typeProperties": {
+			"dataLakeStoreUri": "https://konikaadlsgen1.azuredatalakestore.net/webhdfs/v1",
+			"tenant": "f3c1fdcd-ddcc-4ca4-b512-673ef9cdb9b4",
+			"subscriptionId": "a9d5dd50-031b-43f6-bbe2-fc08769ccce9",
+			"resourceGroupName": "Konika-LTIRG"
+		}
+	}
+}
