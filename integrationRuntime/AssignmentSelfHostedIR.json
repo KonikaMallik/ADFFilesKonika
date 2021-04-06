@@ -1,0 +1,6 @@
+{
+	"name": "AssignmentSelfHostedIR",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}
