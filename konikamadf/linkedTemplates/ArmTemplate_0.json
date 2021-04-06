@@ -570,8 +570,14 @@
 					}
 				],
 				"typeProperties": {
-					"schema": "dbo",
-					"table": "DimProduct"
+					"schema": {
+						"value": "HumanResources",
+						"type": "Expression"
+					},
+					"table": {
+						"value": "Employee",
+						"type": "Expression"
+					}
 				}
 			},
 			"dependsOn": [

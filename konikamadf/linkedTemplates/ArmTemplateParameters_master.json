@@ -35,6 +35,9 @@
 		"BlobSalesOutputLS_connectionString": {
 			"value": ""
 		},
+		"OnPremSQLServerLS_connectionString": {
+			"value": ""
+		},
 		"OnPremiseSQLServer_connectionString": {
 			"value": ""
 		},
@@ -52,6 +55,9 @@
 		},
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://konikaadlsgen2.dfs.core.windows.net"
+		},
+		"OnPremSQLServerLS_properties_typeProperties_userName": {
+			"value": "@{linkedService().UserName}"
 		},
 		"OnPremiseSQLServer_properties_typeProperties_userName": {
 			"value": "malli"

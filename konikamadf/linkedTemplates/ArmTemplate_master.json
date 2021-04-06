@@ -47,6 +47,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'BlobSalesOutputLS'"
 		},
+		"OnPremSQLServerLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OnPremSQLServerLS'"
+		},
 		"OnPremiseSQLServer_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'OnPremiseSQLServer'"
@@ -70,6 +74,10 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://konikaadlsgen2.dfs.core.windows.net"
+		},
+		"OnPremSQLServerLS_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "@{linkedService().UserName}"
 		},
 		"OnPremiseSQLServer_properties_typeProperties_userName": {
 			"type": "string",
@@ -184,6 +192,12 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"OnPremSQLServerLS_connectionString": {
+						"value": "[parameters('OnPremSQLServerLS_connectionString')]"
+					},
+					"OnPremSQLServerLS_properties_typeProperties_userName": {
+						"value": "[parameters('OnPremSQLServerLS_properties_typeProperties_userName')]"
 					}
 				}
 			},
