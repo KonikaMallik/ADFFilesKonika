@@ -1,0 +1,188 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "konikamadf"
+		},
+		"ADVSourceLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ADVSourceLS'"
+		},
+		"ADVSourceLS_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'ADVSourceLS'"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureSqlDatabaseLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabaseLS'"
+		},
+		"AzureSqlDimCustomerLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDimCustomerLS'"
+		},
+		"AzureSqlSalesLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlSalesLS'"
+		},
+		"AzureSqlSampleDBLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlSampleDBLS'"
+		},
+		"AzureSynapseAnalyticsLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsLS'"
+		},
+		"BlobSalesOutputLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'BlobSalesOutputLS'"
+		},
+		"OnPremiseSQLServer_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'OnPremiseSQLServer'"
+		},
+		"OnPremiseSQLServer_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OnPremiseSQLServer'"
+		},
+		"SalesDataLS_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SalesDataLS'"
+		},
+		"SampleDesLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SampleDesLS'"
+		},
+		"ADVSourceLS_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "malli"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://konikaadlsgen2.dfs.core.windows.net"
+		},
+		"OnPremiseSQLServer_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "malli"
+		},
+		"SalesDataLS_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\Users\\malli\\Downloads"
+		},
+		"SalesDataLS_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "malli"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "konikamadf_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureSqlDatabaseLS_connectionString": {
+						"value": "[parameters('AzureSqlDatabaseLS_connectionString')]"
+					},
+					"AzureSqlDimCustomerLS_connectionString": {
+						"value": "[parameters('AzureSqlDimCustomerLS_connectionString')]"
+					},
+					"AzureSqlSalesLS_connectionString": {
+						"value": "[parameters('AzureSqlSalesLS_connectionString')]"
+					},
+					"AzureSqlSampleDBLS_connectionString": {
+						"value": "[parameters('AzureSqlSampleDBLS_connectionString')]"
+					},
+					"AzureSynapseAnalyticsLS_connectionString": {
+						"value": "[parameters('AzureSynapseAnalyticsLS_connectionString')]"
+					},
+					"BlobSalesOutputLS_connectionString": {
+						"value": "[parameters('BlobSalesOutputLS_connectionString')]"
+					},
+					"SampleDesLS_connectionString": {
+						"value": "[parameters('SampleDesLS_connectionString')]"
+					},
+					"ADVSourceLS_connectionString": {
+						"value": "[parameters('ADVSourceLS_connectionString')]"
+					},
+					"ADVSourceLS_password": {
+						"value": "[parameters('ADVSourceLS_password')]"
+					},
+					"OnPremiseSQLServer_connectionString": {
+						"value": "[parameters('OnPremiseSQLServer_connectionString')]"
+					},
+					"OnPremiseSQLServer_password": {
+						"value": "[parameters('OnPremiseSQLServer_password')]"
+					},
+					"SalesDataLS_password": {
+						"value": "[parameters('SalesDataLS_password')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"ADVSourceLS_properties_typeProperties_userName": {
+						"value": "[parameters('ADVSourceLS_properties_typeProperties_userName')]"
+					},
+					"OnPremiseSQLServer_properties_typeProperties_userName": {
+						"value": "[parameters('OnPremiseSQLServer_properties_typeProperties_userName')]"
+					},
+					"SalesDataLS_properties_typeProperties_host": {
+						"value": "[parameters('SalesDataLS_properties_typeProperties_host')]"
+					},
+					"SalesDataLS_properties_typeProperties_userId": {
+						"value": "[parameters('SalesDataLS_properties_typeProperties_userId')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "konikamadf_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'konikamadf_ArmTemplate_0')]"
+			]
+		}
+	]
+}

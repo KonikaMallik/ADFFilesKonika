@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "konikamadf"
+		},
+		"ADVSourceLS_connectionString": {
+			"value": ""
+		},
+		"ADVSourceLS_password": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabaseLS_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDimCustomerLS_connectionString": {
+			"value": ""
+		},
+		"AzureSqlSalesLS_connectionString": {
+			"value": ""
+		},
+		"AzureSqlSampleDBLS_connectionString": {
+			"value": ""
+		},
+		"AzureSynapseAnalyticsLS_connectionString": {
+			"value": ""
+		},
+		"BlobSalesOutputLS_connectionString": {
+			"value": ""
+		},
+		"OnPremiseSQLServer_connectionString": {
+			"value": ""
+		},
+		"OnPremiseSQLServer_password": {
+			"value": ""
+		},
+		"SalesDataLS_password": {
+			"value": ""
+		},
+		"SampleDesLS_connectionString": {
+			"value": ""
+		},
+		"ADVSourceLS_properties_typeProperties_userName": {
+			"value": "malli"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://konikaadlsgen2.dfs.core.windows.net"
+		},
+		"OnPremiseSQLServer_properties_typeProperties_userName": {
+			"value": "malli"
+		},
+		"SalesDataLS_properties_typeProperties_host": {
+			"value": "C:\\Users\\malli\\Downloads"
+		},
+		"SalesDataLS_properties_typeProperties_userId": {
+			"value": "malli"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
