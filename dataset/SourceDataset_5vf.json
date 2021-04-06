@@ -1,0 +1,16 @@
+{
+	"name": "SourceDataset_5vf",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "OnPremiseSQLLSA2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "HumanResources",
+			"table": "Employee"
+		}
+	}
+}
