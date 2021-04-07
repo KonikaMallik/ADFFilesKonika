@@ -2,7 +2,7 @@
 	"name": "AzureDimProductSourceDS",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureSqlDimCustomerLS",
+			"referenceName": "AzureSqlkonikadatabaseLS",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
