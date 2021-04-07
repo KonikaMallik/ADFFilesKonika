@@ -24,7 +24,7 @@
 			"password": "@{linkedService().Password}"
 		},
 		"connectVia": {
-			"referenceName": "AssignmentSelfHostedIR",
+			"referenceName": "SelfHostedAssignmentIR",
 			"type": "IntegrationRuntimeReference"
 		}
 	}
