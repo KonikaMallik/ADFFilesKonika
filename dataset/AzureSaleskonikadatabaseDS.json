@@ -1,0 +1,27 @@
+{
+	"name": "AzureSaleskonikadatabaseDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlkonikadatabaseLS",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "SalesPerson",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TotalSales",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "SalesBySalesPerson"
+		}
+	}
+}
