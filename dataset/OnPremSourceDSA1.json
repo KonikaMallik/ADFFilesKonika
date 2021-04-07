@@ -101,5 +101,6 @@
 			"schema": "HumanResources",
 			"table": "Employee"
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
 }
