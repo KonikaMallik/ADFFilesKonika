@@ -39,6 +39,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlSampleDBLS'"
 		},
+		"AzureSqlkonikadatabaseLS_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlkonikadatabaseLS'"
+		},
 		"AzureSynapseAnalyticsLS_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalyticsLS'"
@@ -169,6 +173,9 @@
 					},
 					"AzureSqlSampleDBLS_connectionString": {
 						"value": "[parameters('AzureSqlSampleDBLS_connectionString')]"
+					},
+					"AzureSqlkonikadatabaseLS_connectionString": {
+						"value": "[parameters('AzureSqlkonikadatabaseLS_connectionString')]"
 					},
 					"AzureSynapseAnalyticsLS_connectionString": {
 						"value": "[parameters('AzureSynapseAnalyticsLS_connectionString')]"
